@@ -1,14 +1,17 @@
 // action = {type:'', payload:'?'}
 
-const deafaulState = {
+const defaulState = {
   customers: [],
 };
 
 const ADD_CUSTOMER = 'ADD_CUSTOMER';
+const ADD_MANY_CUSTOMERS = 'ADD_MANY_CUSTOMERS';
 const REMOVE_CUSTOMER = 'REMOVE_CUSTOMER';
 
-export const customerReducer = (state = deafaulState, action) => {
+export const customerReducer = (state = defaulState, action) => {
   switch (action.type) {
+    case ADD_MANY_CUSTOMERS:
+      return { ...state, customers: [...state.customers, ...action.payload] };
     case ADD_CUSTOMER:
       return { ...state, customers: [...state.customers, action.payload] };
     case REMOVE_CUSTOMER:
@@ -22,4 +25,5 @@ export const customerReducer = (state = deafaulState, action) => {
 };
 
 export const addCustomerAction = (payload) => ({ type: ADD_CUSTOMER });
+export const addManyCustomersAction = (payload) => ({ type: ADD_MANY_CUSTOMERS });
 export const removeCustomerAction = (payload) => ({ type: REMOVE_CUSTOMER });
