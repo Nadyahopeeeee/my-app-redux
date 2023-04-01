@@ -14,22 +14,43 @@ function App() {
     dispatch({ type: 'GET_CASH', payload: cash });
   };
 
+  const addCustomer = (name) => {
+    const customer = {
+      name,
+      id: Date.now(),
+    };
+    dispatch({ type: 'ADD_CUSTOMER', payload: customer });
+  };
+
+  const removeCustomer = (customer) => {
+    dispatch({ type: 'REMOVE_CUSTOMER', payload: customer.id });
+    console.log(customer.id);
+  };
+
   return (
     <div className="App">
-      <div style={{ fontSize: '30px', marginRight: '5px' }}>{cash}</div>
-      <div style={{ display: 'flex' }}>
+      <div>
         <button onClick={() => addCash(Number(prompt()))}>Пополнить счет</button>
-        <button onClick={() => getCash(Number(prompt()))}>Снять со счета</button>
+        <button style={{ marginLeft: '5px' }} onClick={() => getCash(Number(prompt()))}>
+          Снять со счета
+        </button>
+        <div style={{ fontSize: '30px' }}>Баланс: {cash}</div>
       </div>
-      {customers.length > 0 ? (
+      <div style={{ marginTop: '15px' }}>
+        <button onClick={() => addCustomer(prompt())}>Добавить клиента</button>
+        <button style={{ marginLeft: '5px' }}>Удалить клиента</button>
         <div>
-          {customers.map((customer) => (
-            <div>{customer}</div>
-          ))}
+          {customers.length > 0 ? (
+            <div style={{ fontSize: '30px' }}>
+              {customers.map((customer) => (
+                <div onClick={() => removeCustomer(customer)}>{customer.name}</div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ fontSize: '30px' }}>Клиенты отсутсвуют!</div>
+          )}
         </div>
-      ) : (
-        <div style={{ fontSize: '14px' }}>Клиенты отсутсвуют</div>
-      )}
+      </div>
     </div>
   );
 }
